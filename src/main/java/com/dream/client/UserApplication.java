@@ -9,7 +9,7 @@ import com.dream.client.util.MyPreferenceManager;
 
 public class UserApplication extends Application{
 	private static final String TAG = "UserApplication";
-
+	
 	@Override
 	public void onCreate() {
 		Logger.d(TAG, "onCreate");
@@ -21,7 +21,6 @@ public class UserApplication extends Application{
 
         Config.udid = AndroidUtil.getUdid(getApplicationContext());
         Logger.d(TAG, "My udid: " + Config.udid);
-
         JPushInterface.setDebugMode(true); 
         JPushInterface.init(this);
 	}

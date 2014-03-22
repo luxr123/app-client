@@ -5,7 +5,6 @@
     <string name="hello">Hello androidTest!</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
-    
     <string name="account">用户名</string>
     <string name="message">请输入用户名</string>
     <string name="password">密　码</string>
@@ -20,5 +19,7 @@
     <string name="checkcode">验证码</string>
     <string name="uploadIcon">上传头像</string>
     <string name="ok">OK</string>
+    <string name="title_activity_datetime">DatetimeActivity</string>
+    <string name="title_activity_date_time">DateTimeActivity</string>
 
 </resources>

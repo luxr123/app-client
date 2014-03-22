@@ -26,6 +26,9 @@ import android.widget.Toast;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 
+import cn.jpush.android.api.JPushInterface;
+
+import com.dream.client.Config;
 import com.dream.client.R;
 import com.dream.client.constants.ErrorCode;
 import com.dream.client.entity.User;
@@ -115,11 +118,11 @@ public class LoginActivity extends Activity{
 		}
 	}
 
-	private class MyLogin extends AsyncTask<Void, Void, ErrorCode> {
+	private class MyLogin extends AsyncTask<Void, Void, ErrorCode> { 
 		
 		private String name;
 		private String password;
-		String url = "http://10.100.50.38:8080/app-web/user/login";
+		String url = Config.SERVER + "login";
 		private MultiValueMap<String, String> requestParams;
 		
 		@Override
@@ -129,6 +132,7 @@ public class LoginActivity extends Activity{
 			this.password = pwd.getText().toString();
 			
 			requestParams = new LinkedMultiValueMap<String, String>();
+			requestParams.add("udid", Config.udid);
 			requestParams.add("name", this.name);
 			requestParams.add("password", this.password);
 		}
@@ -149,6 +153,9 @@ public class LoginActivity extends Activity{
 				System.out.println("============login success==========");
 				toastShow("login success");
 				Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+				Config.myId = result.getMsg().split("--")[1].split(",")[1];
+				Config.myName = result.getMsg().split("--")[1].split(",")[0];
+				JPushInterface.setAliasAndTags(LoginActivity.this, Config.myName, Config.myChannels);
 				startActivity(intent);
 			}
 		}
@@ -167,7 +174,7 @@ public class LoginActivity extends Activity{
 			HttpHeaders requestHeaders = new HttpHeaders();
 			requestHeaders.setContentType(MediaType.APPLICATION_JSON);
 			HttpEntity<String> requestEntity = new HttpEntity<String>(requestHeaders);
-			String url = "http://10.100.50.38:8080/app-web/user/register";
+			String url = Config.SERVER + "register";
 			RestTemplate restTemplate = new RestTemplate();
 			restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
 			ResponseEntity<User> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity, User.class);
@@ -190,8 +197,6 @@ public class LoginActivity extends Activity{
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		// getMenuInflater().inflate(R.menu.login, menu);
 		return true;
 	}
 

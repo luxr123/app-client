@@ -41,10 +41,13 @@ import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.Toast;
 
+import cn.jpush.android.api.JPushInterface;
+
 import com.alibaba.fastjson.JSON;
 import com.dream.client.Config;
 import com.dream.client.R;
 import com.dream.client.constants.ErrorCode;
+import com.dream.client.entity.Gender;
 import com.dream.client.entity.User;
 
 import encode.BASE64Encoder;
@@ -53,7 +56,7 @@ public class RegisterActivity extends Activity {
 	
 	private static Uri imgPath;
 
-	private static final String TAG = "uploadImage";
+	private static final String TAG = "Register";
 
 	private EditText name = null;
 	private EditText password = null;
@@ -65,22 +68,17 @@ public class RegisterActivity extends Activity {
 
 	private ImageView imgShow;
 
-//	private SharedPreferences preferences;
-//	private SharedPreferences.Editor editor;
-
 	private User user = null;
 
 	// 属性
 	private String checkcode = null;
 	private String guid = null;
-	private String gender = null;
+	private Gender gender = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.register);
-		// preferences = getSharedPreferences("dream-app", MODE_PRIVATE);
-		// editor = preferences.edit();
 
 		Intent intent = getIntent();
 		Bundle bundle = intent.getExtras();
@@ -105,9 +103,9 @@ public class RegisterActivity extends Activity {
 					public void onCheckedChanged(RadioGroup group, int checkedId) {
 						// TODO Auto-generated method stub
 						if (checkedId == R.id.male) {
-							gender = "male";
+							gender = Gender.male;
 						} else if (checkedId == R.id.female) {
-							gender = "female";
+							gender = Gender.female;
 						}
 					}
 
@@ -214,7 +212,7 @@ public class RegisterActivity extends Activity {
 
 	private class MyRegister extends AsyncTask<MediaType, Void, ErrorCode> {
 
-		String url = "http://10.100.50.38:8080/app-web/user/register";
+		String url = Config.SERVER + "register";
 		private MultiValueMap<String, Object> formData;
 		// onPreExecute方法用于在执行后台任务前做一些UI操作
 		@Override
@@ -258,13 +256,6 @@ public class RegisterActivity extends Activity {
 				ResponseEntity<ErrorCode> responseEntity = restTemplate.exchange(url, HttpMethod.POST, requestEntity,
 						ErrorCode.class);
 				
-
-				// Create a new RestTemplate instance
-//				RestTemplate restTemplate = new RestTemplate();
-//				restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
-//				if (mediaType == MediaType.APPLICATION_JSON)
-//					restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
-//				ResponseEntity<ErrorCode> responseEntity = restTemplate.exchange(url, HttpMethod.POST, requestEntity, ErrorCode.class);
 				return responseEntity.getBody();
 			} catch (Exception e) {
 				Log.e(TAG, e.getMessage(), e);
@@ -308,25 +299,13 @@ public class RegisterActivity extends Activity {
 		// onPostExecute方法用于在执行完后台任务后更新UI,显示结果
 		@Override
 		protected void onPostExecute(ErrorCode result) {
-			System.out.println("=========s==========" + result.toString() + "==========s======");
-			// System.out.println("===================end================");
-			 Intent registrtIntent = new Intent(RegisterActivity.this,LoginActivity.class);
-			// // 传参数
-			// Bundle bundle = new Bundle();
-			// bundle.putString("checkcode", result.getCheckcode());
-			// bundle.putString("guid", result.getGuid());
-			// // 在调用intent的方法代表批量添加
-			// registrtIntent.putExtras(bundle);
+System.out.println("=========s==========" + result.toString() + "==========s======");
+			Intent registrtIntent = new Intent(RegisterActivity.this,MainActivity.class);			 
+			 Config.myId = result.getMsg().split("--")[1].split(",")[1];
+			 Config.myName = result.getMsg().split("--")[1].split(",")[0];			 
+			 JPushInterface.setAliasAndTags(RegisterActivity.this, Config.myName, Config.myChannels);
 			 startActivity(registrtIntent);
 		}
-
-		// onCancelled方法用于在取消执行中的任务时更改UI
-		// @Override
-		// protected void onCancelled() {
-		// Log.i(TAG, "onCancelled() called");
-		// textView.setText("cancelled");
-		// progressBar.setProgress(0);
-		// }
 
 	}
 
