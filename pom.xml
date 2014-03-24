@@ -78,6 +78,12 @@
 			<artifactId>jpush-sdk</artifactId>
 			<version>1.5.6</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>android.support.v4</groupId>
+			<artifactId>android-support</artifactId>
+			<version>4.0</version>		    
+		</dependency>
 
 	</dependencies>
 
