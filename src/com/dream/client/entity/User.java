@@ -7,7 +7,15 @@ import java.util.Date;
  * Date: 2013年12月13日 下午4:10:16
  */
 public class User {
-
+	
+	public static final String ID = "id";
+	public static final String USERID = "userid";
+	public static final String NAME = "name";
+	public static final String GENDER = "gender";
+	public static final String ROLE = "role";
+	public static final String ICONURL = "iconUrl";
+	public static final String UDID = "udid";
+	
 	private long id;
 
 	private String name;
@@ -140,15 +148,5 @@ public class User {
 	public void setIconPath(String iconPath) {
 		this.iconPath = iconPath;
 	}
-
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", password=" + password + ", gender=" + gender + ", role=" + role
-				+ ", checkcode=" + checkcode + ", guid=" + guid + ", salt=" + salt + ", createtime=" + createtime
-				+ ", updatetime=" + updatetime + ", iconPath=" + iconPath + ", udid=" + udid + ", tags=" + tags + "]";
-	}
-
-
-
 
 }

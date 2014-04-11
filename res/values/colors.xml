@@ -1,6 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <resources>
-
-    <color name="black_overlay">#66000000</color>
-    <color name="none_color">#00000000</color>
-    <color name="bule_overlay">#660D92DD</color>
-</resources>
+	<color name="button_text_normal">#ffffffff</color>
+    <color name="button_text_pressed">#ffffffff</color>
+    
+    <color name="black">#000000</color>
+    <color name="pull_refresh_textview">#000000</color>
+    <color name="gold">#000000</color>
+    <color name="transparent">#00000000</color>
+</resources>    

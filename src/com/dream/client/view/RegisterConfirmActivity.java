@@ -1,3 +1,4 @@
+package com.dream.client.view;
 //package com.dream.client.view;
 //
 //

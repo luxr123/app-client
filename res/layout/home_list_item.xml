@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/listitem_selector"
+    android:orientation="horizontal"
+    android:paddingTop="3.0dip" >
+
+    <RelativeLayout
+        android:layout_width="50.0dip"
+        android:layout_height="50.0dip"
+        android:layout_weight="0.0" >
+
+        <ImageView
+            android:id="@+id/home_headicon"
+            android:layout_width="35.0dip"
+            android:layout_height="35.0dip"
+            android:scaleType="fitCenter"
+            android:src="@drawable/app_icon" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.0"
+        android:orientation="vertical"
+        android:padding="4.0dip" >
+
+        <TextView
+            android:id="@+id/home_nick"
+            android:layout_width="wrap_content"
+            android:layout_height="32.0dip"
+            android:layout_alignParentLeft="true"
+            android:textColor="#000000"
+            android:textSize="14.0sp" 
+            android:text="nick"/>
+
+        <ImageView
+            android:id="@+id/home_vip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/home_nick"
+            android:src="@drawable/vip" />
+
+        <TextView
+            android:id="@+id/home_timestamp"
+            android:layout_width="wrap_content"
+            android:layout_height="32.0dip"
+            android:layout_alignParentRight="true"
+            android:textColor="#ff000000"
+            android:textSize="8.0sp" 
+            android:text="00分钟前"/>
+
+        <ImageView
+            android:id="@+id/home_hasimage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/home_timestamp" 
+            android:src="@drawable/hasimage"/>
+        
+        <GridView
+            android:id="@+id/gridview"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_alignBottom="@+id/home_nick"
+            android:layout_alignLeft="@+id/home_nick"
+            android:layout_below="@+id/home_vip"
+            android:gravity="center"
+            android:horizontalSpacing="4dip"
+            android:numColumns="auto_fit"
+            android:padding="4dip"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="4dip" />
+
+        <TextView
+            android:id="@+id/home_origtext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/home_nick"
+            android:textColor="#081008"
+            android:textSize="12.0sp" 
+            android:text="xxxxxxxxxxxx"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

@@ -314,7 +314,7 @@ public class ImageManager {
 					String url = imageRef.url;
 					if (url == null)
 						return;
-					// 如果本地url即读取sd相册图片，则直接读取，不用经过DiskCache
+					// 如果本地url即读取sd相册图片，则直接读取，不用经过DiskCache  dcim
 					if (url.toLowerCase().contains("dcim")) {
 
 						tBitmap = null;

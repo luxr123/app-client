@@ -1,35 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical">
+    android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/username"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_x="113dp"
-        android:layout_y="4dp"
-        android:text="@string/hello_world" />
+        android:layout_margin="3px" >
 
-    <ImageView
-        android:id="@+id/icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_span="2"
-        android:layout_x="78dp"
-        android:layout_y="-1dp"
-        android:maxHeight="60dp"
-        android:maxWidth="60dp"
-        android:src="@drawable/app_icon" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/menu_official" >
+        </ImageView>
 
-    <ImageButton
-        android:id="@+id/activity_card_write"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_x="0dp"
-        android:layout_y="0dp"
-        android:src="@drawable/activity_card_write" />
+        <TextView
+            android:id="@+id/showName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="#343434"
+            android:textSize="15px" >
+        </TextView>
 
-</AbsoluteLayout>
+        <ImageButton
+            android:id="@+id/activity_card_write"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/refreshBtn"
+            android:background="@drawable/activity_card_write" >
+        </ImageButton>
+
+        <ImageButton
+            android:id="@+id/refreshBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="12px"
+            android:background="@drawable/top_refresh_normal" >
+        </ImageButton>
+
+        <TextView
+            android:id="@+id/username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/showName"
+            android:text="@string/hello_world" />
+
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/showName"
+            android:layout_alignParentTop="true"
+            android:layout_span="2"
+            android:maxHeight="60dp"
+            android:maxWidth="60dp"
+            android:src="@drawable/app_icon" />
+    </RelativeLayout>
+
+    <com.dream.client.view.CustomListView
+        android:id="@+id/mListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:cacheColorHint="@android:color/transparent"
+        android:fadingEdgeLength="0dp" />
+
+</LinearLayout>

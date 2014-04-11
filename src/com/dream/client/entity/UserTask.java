@@ -6,6 +6,15 @@ package com.dream.client.entity;
  * @Date: 2013年12月25日 下午8:36:06
  */
 public class UserTask {
+	
+	public static final String ID = "id";
+	public static final String TASKID = "taskid";
+	public static final String CONTENT = "content";
+	public static final String IMGURL = "imgurl";
+	public static final String CONTACTINFO = "contactinfo";
+	public static final String CREATETIME = "createtime";
+	public static final String ENDTIME = "endtime";
+	public static final String CREATEUSERID = "createuserid";
 
 	private long id;
 
@@ -28,7 +37,16 @@ public class UserTask {
 	private int waitcount;  //等待领取该任务人数
 	  
 	private String createusername;  //发布该任务的用户名
+	
+	private String userIcon;  //发布该任务的用户头像路径
 
+	public String getUserIcon() {
+		return userIcon;
+	}
+
+	public void setUserIcon(String userIcon) {
+		this.userIcon = userIcon;
+	}
 
 	public int getSuccesscount() {
 		return successcount;
@@ -118,4 +136,11 @@ public class UserTask {
 		this.status = status;
 	}
 
+	@Override
+	public String toString() {
+		return "UserTask [id=" + id + ", content=" + content + ", imgurl=" + imgurl + ", contactinfo=" + contactinfo + ", createtime="
+				+ createtime + ", endtime=" + endtime + ", createuserid=" + createuserid + ", status=" + status + ", successcount="
+				+ successcount + ", waitcount=" + waitcount + ", createusername=" + createusername + "]";
+	}
+	
 }

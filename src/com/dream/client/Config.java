@@ -16,13 +16,15 @@ public class Config {
     
     //public static String SERVER = "http://192.168.1.102:8080/app-web/user/";
     //public static String SERVER2 = "http://192.168.1.102:8080/app-web/task/";
-    public static String SERVER = "http://192.168.2.106:8080/app-web/user/";
-    public static String SERVER2 = "http://192.168.2.106:8080/app-web/task/";
+    public static String SERVER = "http://10.100.50.38:8080/app-web/user/";
+    public static String SERVER2 = "http://10.100.50.38:8080/app-web/task/";
+    public static String SERVER3 = "http://10.100.50.38:8080/app-web/image/";
    // public static String SERVER = "http://127.0.0.1:8080/app-web/user/";
    // public static String SERVER2 = "http://127.0.0.1:8080/app-web/task/";
     public static String udid;
     public static String myName;
-    public static String myId;
+    public static String myIconUrl;
+    public static Long myId;
     public static Set<String> myChannels = new HashSet<String>();
     public static final String TAG = "all";
     

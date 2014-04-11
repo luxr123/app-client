@@ -1,5 +1,6 @@
 package com.dream.client.view;
 
+import org.json.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -25,15 +26,15 @@ import android.widget.CompoundButton;
 import android.widget.Toast;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
-
 import cn.jpush.android.api.JPushInterface;
 
 import com.dream.client.Config;
 import com.dream.client.R;
 import com.dream.client.constants.ErrorCode;
 import com.dream.client.entity.User;
+import com.dream.client.util.StringUtils;
 
-public class LoginActivity extends Activity{
+public class LoginActivity extends Activity {
 	protected static final String TAG = LoginActivity.class.getSimpleName();
 	private Button btn_login;// 登录按钮
 	private Button btn_regist;// 注册按钮
@@ -76,15 +77,15 @@ public class LoginActivity extends Activity{
 
 				});
 		btn_regist.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				new MyRegister().execute();
 			}
 		});
-		
+
 		btn_login.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				new MyLogin().execute();
@@ -118,19 +119,19 @@ public class LoginActivity extends Activity{
 		}
 	}
 
-	private class MyLogin extends AsyncTask<Void, Void, ErrorCode> { 
-		
+	private class MyLogin extends AsyncTask<Void, Void, String> {
+
 		private String name;
 		private String password;
 		String url = Config.SERVER + "login";
 		private MultiValueMap<String, String> requestParams;
-		
+
 		@Override
 		protected void onPreExecute() {
 			System.out.println("============start login==========");
 			this.name = user.getText().toString();
 			this.password = pwd.getText().toString();
-			
+
 			requestParams = new LinkedMultiValueMap<String, String>();
 			requestParams.add("udid", Config.udid);
 			requestParams.add("name", this.name);
@@ -138,25 +139,35 @@ public class LoginActivity extends Activity{
 		}
 
 		@Override
-		protected ErrorCode doInBackground(Void... params) {
+		protected String doInBackground(Void... params) {
 			HttpHeaders requestHeaders = new HttpHeaders();
 			requestHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-			HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<MultiValueMap<String, String>>(requestParams, requestHeaders);
+			HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<MultiValueMap<String, String>>(requestParams,
+					requestHeaders);
 			RestTemplate restTemplate = new RestTemplate(true);
-			ResponseEntity<ErrorCode> responseEntity = restTemplate.exchange(url, HttpMethod.POST, requestEntity, ErrorCode.class);
+			ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
 			return responseEntity.getBody();
 		}
 
 		@Override
-		protected void onPostExecute(ErrorCode result) {
-			if(ErrorCode.CODE_SUCCESS.equals(result.getErr())){
-				System.out.println("============login success==========");
-				toastShow("login success");
-				Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-				Config.myId = result.getMsg().split("--")[1].split(",")[1];
-				Config.myName = result.getMsg().split("--")[1].split(",")[0];
-				JPushInterface.setAliasAndTags(LoginActivity.this, Config.myName, Config.myChannels);
-				startActivity(intent);
+		protected void onPostExecute(String result) {
+			JSONObject jsonObject;
+			ErrorCode errorCode;
+			try {
+				jsonObject = new JSONObject(result);
+				errorCode = com.alibaba.fastjson.JSONObject.parseObject(jsonObject.getString("errorcode"), ErrorCode.class);
+				if (errorCode.isSucceed()) {
+					System.out.println("============login success==========");
+					toastShow("login success");
+					Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+					Config.myId = jsonObject.getLong("id");
+					Config.myName = jsonObject.getString("username");
+					JPushInterface.setAliasAndTags(LoginActivity.this, Config.myName, Config.myChannels);
+					startActivity(intent);
+				}
+			} catch (Exception exp) {
+				StringUtils.toastShow(getApplicationContext(), "sorry, login failed. please try again");
+				exp.printStackTrace();
 			}
 		}
 
